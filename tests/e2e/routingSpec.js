@@ -24,9 +24,7 @@ describe('Routing Test for tournament link', function() {
   it('should show teams on the first page', function() { // Open the list of teams page browser . get ( '/' );
     browser.get('/main.html');
     element(by.id('tournamentLink')).click();
-    element.all(by.tagName('h2')).get(0).getText().then(function(text) {
-      console.log(text);
-    });
+  
     expect((element.all(by.tagName('h2'))).get(0).getText()).toEqual('Tournament');
   });
 });
