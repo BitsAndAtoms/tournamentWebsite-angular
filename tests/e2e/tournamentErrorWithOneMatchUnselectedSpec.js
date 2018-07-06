@@ -18,6 +18,6 @@ describe('Error is displayed on tournament page', function() {
     element(by.id('tournamentLink')).click();
     element(by.id('player0_1')).click();
     element(by.id('completeThisRoundButton')).click();
-  expect(element(by.id('error')).getText()).toEqual('Please select a winner for every match.');
+    expect(element(by.id('error')).getText()).toEqual('Please select a winner for every match.');
   });
 });
