@@ -7,11 +7,11 @@ function dumpHtml() {
 
 
 describe('Succeess scenario from loading to tournament complete', function() {
-  it('should complete a tournament successfully', function() { // Open the list of teams page browser . get ( '/' );
+  it('should complete a tournament successfully with 2 players', function() { // Open the list of teams page browser . get ( '/' );
     browser.get('/main.html');
-    expect((element(by.tagName('h2'))).getText()).toEqual('Welcome');
+    expect((element(by.id('welcome'))).getText()).toEqual('Welcome');
     element(by.id('registrationLink')).click();
-    expect((element(by.tagName('h2'))).getText()).toEqual('Register Players');
+    expect((element(by.id('registrationHeading'))).getText()).toEqual('Register Players');
     element.all(by.id('Contestant_1')).sendKeys('Jobs');
     element.all(by.id('Contestant_2')).sendKeys('Gates');
 
