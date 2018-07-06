@@ -6,7 +6,7 @@ function dumpHtml() {
 
 
 
-describe('Routing Test to navigate to welcome.html', function() {
+describe('Succeess scenario from loading to tournament complete', function() {
   it('should select winner and display the name', function() { // Open the list of teams page browser . get ( '/' );
     browser.get('/main.html');
     expect((element(by.tagName('h2'))).getText()).toEqual('Welcome');
@@ -21,10 +21,10 @@ describe('Routing Test to navigate to welcome.html', function() {
     element.all(by.tagName('input')).get(6).sendKeys('Yeats');
     element.all(by.tagName('input')).get(7).sendKeys('Rachmanioff');
     element(by.id('submitRosterButton')).click();
- //dumpHtml();
- element.all(by.tagName('input')).getAttribute('value').then(function(text) {
-   console.log(text);
- });
+    //dumpHtml();
+    element.all(by.tagName('input')).getAttribute('value').then(function(text) {
+      console.log(text);
+    });
     element.all(by.tagName('input')).get(0).getAttribute('value').then(function(text) {
       console.log(text);
     });
