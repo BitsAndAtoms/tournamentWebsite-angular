@@ -1,23 +1,18 @@
-function dumpHtml() {
-  browser.getPageSource().then(function(source) {
-    console.log(source);
-  });
-}
-
-
+var helper = require("./helper.js");
 
 describe('Error is displayed on tournament page', function() {
   it('should complete a tournament successfully', function() { // Open the list of teams page browser . get ( '/' );
-    browser.get('/main.html');
-    element(by.id('registrationLink')).click();
-    element.all(by.id('Contestant_1')).clear().sendKeys('Hercules');
-    element.all(by.id('Contestant_2')).clear().sendKeys('Troy');
-    element.all(by.id('Contestant_3')).clear().sendKeys('Hector');
-    element.all(by.id('Contestant_4')).clear().sendKeys('Janus');
-    element(by.id('submitRosterButton')).click();
-    element(by.id('tournamentLink')).click();
-    element(by.id('player0_1')).click();
-    element(by.id('completeThisRoundButton')).click();
+    helper.openMainPage();
+    helper.clickLinkById('registrationLink');
+    contestants = ['Hercules', 'Troy', 'Hector', 'Janus'];
+    for (i = 0; i < 4; i++) {
+      var index = i + 1;
+      helper.populateFieldById(contestants[i], 'Contestant_' + "" + index);
+    }
+    helper.clickLinkById('submitRosterButton');
+    helper.clickLinkById('tournamentLink');
+    helper.clickLinkById('player0_1');
+    helper.clickLinkById('completeThisRoundButton');
     expect(element(by.id('error')).getText()).toEqual('Please select a winner for every match.');
   });
 });

@@ -1,52 +1,43 @@
-function dumpHtml() {
-  browser.getPageSource().then(function(source) {
-    console.log(source);
-  });
-}
-
-
+var helper = require("./helper.js");
 
 describe('Succeess scenario from loading to tournament complete', function() {
   it('should complete a tournament successfully with 8 players', function() { // Open the list of teams page browser . get ( '/' );
-    browser.get('/main.html');
+    helper.openMainPage();
     expect((element(by.id('welcome'))).getText()).toEqual('Welcome');
-    element(by.id('registrationLink')).click();
+    helper.clickLinkById('registrationLink');
     expect((element(by.id('registrationHeading'))).getText()).toEqual('Register Players');
-    element.all(by.id('Contestant_1')).sendKeys('Beethoven');
-    element.all(by.id('Contestant_2')).sendKeys('Mozart');
-    element.all(by.id('Contestant_3')).sendKeys('Tchaikovsky');
-    element.all(by.id('Contestant_4')).sendKeys('Kalidas');
-    element.all(by.id('Contestant_5')).sendKeys('Frost');
-    element.all(by.id('Contestant_6')).sendKeys('Shelly');
-    element.all(by.id('Contestant_7')).sendKeys('Yeats');
-    element.all(by.id('Contestant_8')).sendKeys('Rachmanioff');
-    element(by.id('submitRosterButton')).click();
+    contestants = ['Beethoven', 'Mozart', 'Tchaikovsky', 'Kalidas', 'Frost', 'Shelly', 'Yeats', 'Rachmanioff'];
+
+    for (i = 0; i < 8; i++) {
+      var index = i + 1;
+      helper.populateFieldById(contestants[i], 'Contestant_' + "" + index);
+    }
+    helper.clickLinkById('submitRosterButton');
+
     expect(element.all(by.tagName('input')).getAttribute('value')).toEqual(['Beethoven', 'Mozart', 'Tchaikovsky', 'Kalidas', 'Frost', 'Shelly', 'Yeats', 'Rachmanioff']);
     //  element.all(by.tagName('input')).getAttribute('value').then(function(text) {
     //  console.log(text);
     //});
-    element(by.id('tournamentLink')).click();
+    helper.clickLinkById('tournamentLink');
     expect((element(by.id('tournamentHeading'))).getText()).toEqual('Tournament');
 
     expect((element(by.id('round'))).getText()).toEqual('Round 1');
-    element(by.id('player0_0')).click();
-    element(by.id('player1_1')).click();
-    element(by.id('player1_2')).click();
-    element(by.id('player0_3')).click();
-    element(by.id('completeThisRoundButton')).click();
-
+    helper.clickLinkById('player0_0');
+    helper.clickLinkById('player1_1');
+    helper.clickLinkById('player1_2');
+    helper.clickLinkById('player0_3');
+    helper.clickLinkById('completeThisRoundButton');
 
     expect((element(by.id('round'))).getText()).toEqual('Round 2');
     expect(element.all(by.tagName('input')).getAttribute('value')).toEqual(['Beethoven', 'Kalidas', 'Shelly', 'Yeats']);
-    element(by.id('player0_0')).click();
-    element(by.id('player0_1')).click();
-    element(by.id('completeThisRoundButton')).click();
+    helper.clickLinkById('player0_0');
+    helper.clickLinkById('player0_1');
+    helper.clickLinkById('completeThisRoundButton');
 
     expect((element(by.id('round'))).getText()).toEqual('Round 3');
     expect(element.all(by.tagName('input')).getAttribute('value')).toEqual(['Beethoven', 'Shelly']);
-    element(by.id('player0_0')).click();
-    element(by.id('completeThisRoundButton')).click();
-
+    helper.clickLinkById('player0_0');
+    helper.clickLinkById('completeThisRoundButton');
     expect(element(by.id('winner')).getText()).toEqual('Winner: Beethoven');
 
   });
